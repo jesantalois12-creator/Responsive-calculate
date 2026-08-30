@@ -79,7 +79,7 @@ st.markdown(f"""
 
 st.markdown("---")
 
-# --- BAGIAN 3: GRAFIK VISUALISASI MATPLOTLIB (BARU) ---
+# --- BAGIAN 3: GRAFIK VISUALISASI DENGAN UTILITY LINES (UPDATED) ---
 st.subheader("📊 Peta Grafik Lengkungan Potongan Pipa")
 
 # Derajat untuk titik penandaan utama (0 sampai 360 derajat)
@@ -93,11 +93,19 @@ tinggi_halus = t180 * (1 - np.cos(np.radians(derajat_halus))) / 2
 # Menggambar plot kurva menggunakan Matplotlib
 fig, ax = plt.subplots(figsize=(8, 4))
 ax.plot(derajat_halus, tinggi_halus, color="#1E88E5", linewidth=3, label="Garis Potong Welder")
-ax.scatter(derajat_titik, tinggi_titik, color="#D32F2F", s=60, zorder=5, label="8 Titik Utama")
+
+# MENAMBAHKAN MARKER WARNA HIJAU PADA TITIK UTAMA
+ax.scatter(derajat_titik, tinggi_titik, color="#2E7D32", s=80, zorder=5, label="8 Titik Utama (Hijau)")
+
+# MENAMBAHKAN GARIS BANTU TINGGI POTONGAN (GARIS HORIZONTAL HIJAU PUTUS-PUTUS)
+ax.axhline(y=t180, color="#4CAF50", linestyle="--", alpha=0.7, label=f"Tinggi Puncak ({t180} mm)")
+ax.axhline(y=t135, color="#81C784", linestyle=":", alpha=0.6)
+ax.axhline(y=t90, color="#A5D6A7", linestyle=":", alpha=0.6)
+ax.axhline(y=t45, color="#C8E6C9", linestyle=":", alpha=0.6)
 
 # Menambahkan teks petunjuk angka di setiap titik utama agar jelas di layar HP
 for d, t in zip(derajat_titik[:-1], tinggi_titik[:-1]):
-    ax.annotate(f"{t}mm", (d, t), textcoords="offset points", xytext=(0,10), ha='center', fontsize=9, fontweight='bold')
+    ax.annotate(f"{t}mm", (d, t), textcoords="offset points", xytext=(0,10), ha='center', fontsize=9, fontweight='bold', color="#1B5E20")
 
 # Pengaturan desain grafis sumbu X dan Y
 ax.set_title(f"Pola Mal Potong Sabuk Kertas - Pipa {pilihan_pipa}", fontsize=12, fontweight='bold')
@@ -106,7 +114,7 @@ ax.set_ylabel("Tinggi Pemotongan (mm)", fontsize=10)
 ax.set_xticks(derajat_titik)
 ax.set_xlim(0, 360)
 ax.set_ylim(-5, t180 + 15)
-ax.grid(True, linestyle="--", alpha=0.5)
+ax.grid(True, linestyle="-.", alpha=0.3)
 ax.legend(loc="upper right")
 
 # Menampilkan grafik ke dalam halaman web Streamlit
