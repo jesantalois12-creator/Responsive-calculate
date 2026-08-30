@@ -57,27 +57,6 @@ st.markdown(f"""
 
 st.markdown("---")
 
-# --- BAGIAN 2: GARIS PANDUAN PEMOTONGAN (8 TITIK) ---
-st.subheader("📝 Garis Panduan Pemotongan untuk Welder (Tinggal Garis di Lapangan)")
-
-st.write(
-    "Untuk memotong pipa besi, pekerja cukup melingkari pipa dengan sabuk kertas, "
-    "menandai **8 titik koordinat utama**, lalu membuat garis melengkung menghubungkan angka instan dari AI ini:"
-)
-
-# Menampilkan 8 koordinat lingkaran secara berurutan berputar
-st.markdown(f"""
-* **Titik 0° (Atas / Awal):** 0.0 mm
-* **Titik 45° (Samping Kanan Atas):** {t45} mm
-* **Titik 90° (Samping Kanan):** {t90} mm
-* **Titik 135° (Samping Kanan Bawah):** {t135} mm
-* **Titik 180° (Bawah / Puncak Lengkungan):** {t180} mm
-* **Titik 225° (Samping Kiri Bawah):** {t135} mm
-* **Titik 270° (Samping Kiri):** {t90} mm
-* **Titik 315° (Samping Kiri Atas):** {t45} mm
-""")
-
-st.markdown("---")
 
 # --- BAGIAN 3: GRAFIK VISUALISASI DENGAN GARIS VERTIKAL HITAM ---
 st.subheader("📊 Peta Grafik Lengkungan Potongan Pipa")
