@@ -8,34 +8,39 @@ st.title("Responsive Calculate")
 st.markdown("---")
 
 # --- FITUR PILIHAN UKURAN PIPA ---
-# Membuat dropdown pilihan pipa dari 4 inci sampai 24 inci
 pilihan_pipa = st.selectbox(
     "Silakan Pilih Ukuran Pipa:",
     ["4\"", "5\"", "6\"", "7\"", "8\"", "9\"", "10\"", "12\"", "14\"", "16\"", "18\"", "20\"", "22\"", "24\""],
-    index=4 # Default otomatis memilih pipa 8" agar sama seperti gambar sebelumnya
+    index=4 # Default otomatis memilih pipa 8"
 )
 
 st.markdown("---")
 
-# --- LOGIKA DATA OTOMATIS BERDASARKAN PILIHAN ---
-# Data tiruan sebagai contoh responsif, angka akan berubah otomatis saat Anda memilih pipa di web
+# --- LOGIKA DATA OTOMATIS BERDASARKAN PILIHAN (8 TITIK) ---
 if pilihan_pipa == "4\"":
-    od, circum, miter, t90, t180 = "114,3 mm", "359,1 mm", "15°", "15,2 mm", "30,5 mm"
+    od, circum, miter = "114,3 mm", "359,1 mm", "15°"
+    t45, t90, t135, t180 = "4,5 mm", "15,2 mm", "26,0 mm", "30,5 mm"
 elif pilihan_pipa == "5\"":
-    od, circum, miter, t90, t180 = "141,3 mm", "443,9 mm", "15°", "18,9 mm", "37,8 mm"
+    od, circum, miter = "141,3 mm", "443,9 mm", "15°"
+    t45, t90, t135, t180 = "5,5 mm", "18,9 mm", "32,3 mm", "37,8 mm"
 elif pilihan_pipa == "6\"":
-    od, circum, miter, t90, t180 = "168,3 mm", "528,7 mm", "15°", "22,5 mm", "45,1 mm"
+    od, circum, miter = "168,3 mm", "528,7 mm", "15°"
+    t45, t90, t135, t180 = "6,6 mm", "22,5 mm", "38,5 mm", "45,1 mm"
 elif pilihan_pipa == "8\"":
-    od, circum, miter, t90, t180 = "219,1 mm", "688,3 mm", "15°", "29,3 mm", "58,7 mm"
+    od, circum, miter = "219,1 mm", "688,3 mm", "15°"
+    t45, t90, t135, t180 = "8,6 mm", "29,3 mm", "50,1 mm", "58,7 mm"
 elif pilihan_pipa == "10\"":
-    od, circum, miter, t90, t180 = "273,0 mm", "857,7 mm", "15°", "36,5 mm", "73,1 mm"
+    od, circum, miter = "273,0 mm", "857,7 mm", "15°"
+    t45, t90, t135, t180 = "10,7 mm", "36,5 mm", "62,4 mm", "73,1 mm"
 else:
-    # Angka perkiraan otomatis untuk ukuran pipa lainnya (7", 9", dan 12" sampai 24")
+    # Perkiraan otomatis untuk ukuran pipa lainnya menggunakan perkalian skala
     nilai_inci = float(pilihan_pipa.replace('"', ''))
     od = f"{round(nilai_inci * 27.4, 1)} mm"
     circum = f"{round(nilai_inci * 27.4 * 3.1415, 1)} mm"
     miter = "15°"
+    t45 = f"{round(nilai_inci * 1.07, 1)} mm"
     t90 = f"{round(nilai_inci * 3.66, 1)} mm"
+    t135 = f"{round(nilai_inci * 6.26, 1)} mm"
     t180 = f"{round(nilai_inci * 3.66 * 2, 1)} mm"
 
 # --- BAGIAN 1: RINGKASAN DATA TEKNIS ---
@@ -50,17 +55,22 @@ st.markdown(f"""
 
 st.markdown("---")
 
-# --- BAGIAN 2: GARIS PANDUAN PEMOTONGAN ---
+# --- BAGIAN 2: GARIS PANDUAN PEMOTONGAN (8 TITIK) ---
 st.subheader("📝 Garis Panduan Pemotongan untuk Welder (Tinggal Garis di Lapangan)")
 
 st.write(
     "Untuk memotong pipa besi, pekerja cukup melingkari pipa dengan sabuk kertas, "
-    "menandai 4 titik koordinat utama, lalu membuat garis melengkung mengikuti angka instan dari AI ini:"
+    "menandai **8 titik koordinat utama**, lalu membuat garis melengkung menghubungkan angka instan dari AI ini:"
 )
 
+# Menampilkan 8 koordinat lingkaran secara berurutan berputar
 st.markdown(f"""
-* **Titik 0° (Atas):** 0 mm (Titik awal)
+* **Titik 0° (Atas / Awal):** 0 mm
+* **Titik 45° (Samping Kanan Atas):** {t45}
 * **Titik 90° (Samping Kanan):** {t90}
+* **Titik 135° (Samping Kanan Bawah):** {t135}
 * **Titik 180° (Bawah / Puncak Lengkungan):** {t180}
+* **Titik 225° (Samping Kiri Bawah):** {t135}
 * **Titik 270° (Samping Kiri):** {t90}
+* **Titik 315° (Samping Kiri Atas):** {t45}
 """)
